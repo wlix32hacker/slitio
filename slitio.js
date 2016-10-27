@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SLITio by szymy Zoom FIX
 // @namespace    slitio.szymy
-// @version      0.1.18-fix-v3
+// @version      0.1.18-fix-v4
 // @description  slither.io MOD
 // @author       szymy
 // @match        http://slither.io/*
@@ -34,8 +34,8 @@
         appendDiv("position-hud", "nsi", styleHUD + "right: 30; bottom: 120px;");
         appendDiv("ip-hud", "nsi", styleHUD + "right: 30; bottom: 150px;");
 		appendDiv("score-hud", "nsi", styleHUD + "right: 30; bottom: 170px;");
-        appendDiv("fps-hud", "nsi", styleHUD + "right: 30; bottom: 190px;");
         appendDiv("gscDsp", "nsi", styleHUD + "right: 30; bottom: 210px;");
+        appendDiv("fps-hud", "nsi", styleHUD + "right: 30; bottom: 190px;");
         positionHUD = document.getElementById("position-hud");
         ipHUD = document.getElementById("ip-hud");
 		scoreHUD = document.getElementById("score-hud");
@@ -50,8 +50,9 @@
         // Keys
         w.addEventListener("keydown", function(e) {
 			switch(e.keyCode) {
-				// ESC - quick resp
-				case 27: quickResp();
+				// CTRL + ESC - quick resp
+				case 27: 
+                    if(e.ctrlKey)quickResp();
 					break;
 				// A - Auto skin rotator
 				case 65: 
@@ -488,8 +489,8 @@
         if (w.playing && fpsHUD && w.fps && w.lrd_mtm) {
             if (Date.now() - w.lrd_mtm > 970) {
                 fpsHUD.textContent = "FPS: " + w.fps;
-                gscDsp.textContent = "GSC: ".concat(w.gsc ? w.gsc.toFixed(2) : 0);
             }
+            gscDsp.textContent = "GSC: ".concat(w.gsc ? w.gsc.toFixed(2) : 0);
         }
         setTimeout(showFPS, 30);
     }
