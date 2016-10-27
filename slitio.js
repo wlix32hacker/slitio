@@ -52,14 +52,28 @@
 					break;
 				// A - Auto skin rotator
 				case 65: 
-					rotate = !rotate; 
-					rotateSkin();
+					//rotate = !rotate; 
+					//rotateSkin();
 					break;
-				// Q - Quit to menu
-				case 81: quit();
+				// ALT + Q - Quit to menu
+				case 81:
+                     if(event.altKey)
+                        quit();
 					break;
-				// S - Change skin
-				case 83: changeSkin();
+				// W - Zoom in
+                case 87: 
+                    zoom({
+                        wheelDelta: 120
+                    })
+                    break;
+				case 83: // S - zoom ount
+                    if(event.altKey){
+                        changeSkin();
+                    }else{
+                        zoom({
+                            wheelDelta: -120
+                        })
+                    }
 					break;
 				// Z - Reset zoom
 				case 90: resetZoom();
@@ -147,7 +161,8 @@
             div.style.opacity = "0.5";
             div.style.margin = "0 auto";
             div.style.padding = "10px 0";
-            div.innerHTML = "[ESC] - Quick resp | [Q] - Quit to menu<br/>[A] - Auto skin rotator | [S] - Change skin<br/>[Z] - Reset zoom | [Space] - Boost";
+            div.innerHTML = `[ESC] - Quick resp | [ALT + Q] - Quit to menu<br/>[ALT + A] - Auto skin rotator | [ALT + S] - Change skin
+            <br/>[Z] - Reset zoom | [Space] - Boost | [W/S/Scroll-Up/Scroll-Down] - Zoom`;
             login.appendChild(div);
             // Menu container
             var sltMenu = document.createElement("div");
