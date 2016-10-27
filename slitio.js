@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SLITio by szymy Zoom FIX
 // @namespace    slitio.szymy
-// @version      0.1.18-fix-v4
+// @version      0.1.18-fix-v5
 // @description  slither.io MOD
 // @author       szymy
 // @match        http://slither.io/*
@@ -80,7 +80,9 @@
                     }
 					break;
 				// Z - Reset zoom
-				case 90: resetZoom();
+                case 90:
+				case 82:
+                 resetZoom();
 					break;
 			}
         }, false);
@@ -138,7 +140,7 @@
     }
 	// Reset zoom
 	function resetZoom() {
-		w.gsc = 0.9;
+		mgCalc = function(){w.gsc = 0.9;}.bind();
 	}
     // Get console log
     function getConsoleLog(log) {
