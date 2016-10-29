@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         SLITio by szymy Zoom FIX
 // @namespace    slitio.szymy
-// @version      0.1.18-fix-v6
+// @version      0.1.18-fix-v7
 // @description  slither.io MOD
 // @author       szymy
 // @match        http://slither.io/*
@@ -47,51 +47,7 @@
         } else {
             document.body.onmousewheel = zoom;
         }
-
-        var mgZoom = null;
-        setInterval(function(){
-            if(mgZoom) mgZoom();
-        }, 1000 / 30);
-        // document.onkeydown = function(b) {
-        //     b = b || window.event;
-        //     var e = b.keyCode;
-        //     if (50037 == e) kd_l = !0;
-        //     else if (50039 == e) kd_r = !0;
-        //     else if (50038 == e || 32 == e) kd_u = !0, setAcceleration(1);
-        //     else if (13 == e || 10 == e)
-        //         if (want_victory_message) {
-        //             if (0 < victory.value.length) save_btn.elem.onclick()
-        //         } else {
-        //             if (!connecting && !connected) play_btn.elem.onclick()
-        //         }
-        //     else 16 == e && testing && (shifty = !0);
-        //     testing && console.log("keydown: " + b.keyCode)
-        // };
-        // document.onkeyup = function(b) {
-        //     b = b || window.event;
-        //     b = b.keyCode;
-        //     50037 == b ? kd_l = !1 : 50039 == b ? kd_r = !1 : 50038 == b || 32 == b ? (kd_u = !1, setAcceleration(0)) : 16 == b && testing && (shifty = !1)
-        // };
-        
         // Keys
-        w.addEventListener("keyup", function(e) {
-            switch(e.keyCode) {
-                // case 38:
-                // case 40:
-                case 83:
-                case 87:
-                    mgZoom = null;
-                break;
-                // case 65: //  A - Disable Rotate Left
-                    // kd_l = false;
-                // break;
-                // case 68:  // D - Disable Rotate Right
-                    // kd_r = false;
-                    // break;
-                // case 87:  // W correr
-                    // setAcceleration(0);
-            }
-        });
         window.mgGsc = 0.45;
         w.addEventListener("keydown", function(e) {
             switch(e.keyCode) {
@@ -99,57 +55,33 @@
                 case 27: 
                     if(e.ctrlKey)quickResp();
                     break;
-                
                 case 65: //  A - Rotate Left
                     zoom({
                         gsc: window.mgGsc
                     });
-                    // A - Auto skin rotator
-                    //rotate = !rotate; 
-                    //rotateSkin();
-                    // kd_l = true;
-                    
                 break;
                 case 68:  // D - Rotate Right
                     resetZoom();
-                    // kd_r = true;
                     break;
                 // ALT + Q - Quit to menu
                 case 81:
                      if(event.altKey)
                         quit();
                     break;
-
-                // case 38: // SETA PRA CIMA
-                case 87: // W
-                    mgZoom = function(){
-                        zoom({
-                            wheelDelta: 120
-                        })
-                    }
-                    break;
-                // case 40: // SETA PRA BAIXO
-                    // mgZoom = function(){
-                    //     zoom({
-                    //         wheelDelta: -120
-                    //     })
-                    // }
-                    // break;
-                
-                // case 87:  // W correr
-                //     setAcceleration(1);
-                    break;
                 case 83: // S - zoom ount
                     if(event.altKey){
                         changeSkin();
                     }else{
-                        mgZoom = function(){
-                            zoom({
-                                wheelDelta: -120
-                            })
-                        }
+                        zoom({
+                            wheelDelta: -0.10
+                        })
                     }
-                    break;
+                break;
+                case 87: // W
+                    zoom({
+                        wheelDelta: 0.10
+                    })
+                break;
                 // Z - Reset zoom
                 case 69:
                 case 90:
@@ -158,13 +90,6 @@
                     break;
             }
         }, false);
-        // Hijack console log
-        /*
-        if (w.console) {
-            w.console.logOld = console.log;
-            w.console.log = getConsoleLog;
-        }
-        */
         // Set menu
         setMenu();
         // Set leaderboard
@@ -196,22 +121,22 @@
         if (!w.gsc || !w.playing) {
             return;
         }
-        console.debug("e.wheelDelta=%s,  e.detail=%s, w.gsc=%s", e.wheelDelta, e.detail, w.gsc);
+        //console.debug("e.wheelDelta=%s,  e.detail=%s, w.gsc=%s", e.wheelDelta, e.detail, w.gsc);
 
         if(e.gsc){
             w.gsc = e.gsc;
         }else{
-            w.gsc *= Math.pow(0.9, e.wheelDelta / -120 || e.detail / 2 || 0); // calc the zoom
+            w.gsc += e.wheelDelta; // calc the zoom
+            // w.gsc *= Math.pow(0.9, e.wheelDelta / -120 || e.detail / 2 || 0); // calc the zoom
         }
         mgCalc = function(gsc){ // recalc the choosed zoom
-            //console.debug('w.gsc=%s, gsc=%s', w.gsc, gsc); 
             w.gsc = gsc;
         }.bind(null, w.gsc);
 
         if(!mgInterval){
-            setInterval(function(){ // calling recalc every 2 seconds
+            setInterval(function(){
                 mgCalc();
-            }, 30);
+            }, 1000 / 30);
         }
     }
     // Reset zoom
