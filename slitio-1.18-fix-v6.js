@@ -19,7 +19,7 @@
         gameFPS = null,
         positionHUD = null,
         ipHUD = null,
-        scoreHUD = null,
+		scoreHUD = null,
         fpsHUD = null,
         gscDsp = null,
         styleHUD = "color: #FFF; font-family: Arial, 'Helvetica Neue', Helvetica, sans-serif; font-size: 14px; position: fixed; opacity: 0.35; z-index: 7;",
@@ -27,18 +27,18 @@
         currentIP = null,
         retry = 0,
         bgImage = null,
-        rotate = false,
-        highScore = 0;
+		rotate = false,
+		highScore = 0;
     function init() {
         // Append DIVs
         appendDiv("position-hud", "nsi", styleHUD + "right: 30; bottom: 120px;");
         appendDiv("ip-hud", "nsi", styleHUD + "right: 30; bottom: 150px;");
-        appendDiv("score-hud", "nsi", styleHUD + "right: 30; bottom: 170px;");
+		appendDiv("score-hud", "nsi", styleHUD + "right: 30; bottom: 170px;");
         appendDiv("gscDsp", "nsi", styleHUD + "right: 30; bottom: 210px;");
         appendDiv("fps-hud", "nsi", styleHUD + "right: 30; bottom: 190px;");
         positionHUD = document.getElementById("position-hud");
         ipHUD = document.getElementById("ip-hud");
-        scoreHUD = document.getElementById("score-hud");
+		scoreHUD = document.getElementById("score-hud");
         fpsHUD = document.getElementById("fps-hud");
         gscDsp = document.getElementById("gscDsp");
         // Add zoom
@@ -81,44 +81,39 @@
                 case 83:
                 case 87:
                     mgZoom = null;
+                break
+                case 65: //  A - Disable Rotate Left
+                    kd_l = false;
                 break;
-                // case 65: //  A - Disable Rotate Left
-                    // kd_l = false;
-                // break;
-                // case 68:  // D - Disable Rotate Right
-                    // kd_r = false;
-                    // break;
+                case 68:  // D - Disable Rotate Right
+                    kd_r = false;
+                    break;
                 // case 87:  // W correr
                     // setAcceleration(0);
             }
         });
-        window.mgGsc = 0.45;
         w.addEventListener("keydown", function(e) {
-            switch(e.keyCode) {
-                // CTRL + ESC - quick resp
-                case 27: 
+			switch(e.keyCode) {
+				// CTRL + ESC - quick resp
+				case 27: 
                     if(e.ctrlKey)quickResp();
-                    break;
-                
+					break;
+				
                 case 65: //  A - Rotate Left
-                    zoom({
-                        gsc: window.mgGsc
-                    });
                     // A - Auto skin rotator
-                    //rotate = !rotate; 
-                    //rotateSkin();
-                    // kd_l = true;
+					//rotate = !rotate; 
+					//rotateSkin();
+                    kd_l = true;
                     
                 break;
                 case 68:  // D - Rotate Right
-                    resetZoom();
-                    // kd_r = true;
+                    kd_r = true;
                     break;
-                // ALT + Q - Quit to menu
-                case 81:
+				// ALT + Q - Quit to menu
+				case 81:
                      if(event.altKey)
                         quit();
-                    break;
+					break;
 
                 // case 38: // SETA PRA CIMA
                 case 87: // W
@@ -135,11 +130,11 @@
                     //     })
                     // }
                     // break;
-                
+				
                 // case 87:  // W correr
                 //     setAcceleration(1);
                     break;
-                case 83: // S - zoom ount
+				case 83: // S - zoom ount
                     if(event.altKey){
                         changeSkin();
                     }else{
@@ -149,14 +144,13 @@
                             })
                         }
                     }
-                    break;
-                // Z - Reset zoom
-                case 69:
+					break;
+				// Z - Reset zoom
                 case 90:
-                case 82:
+				case 82:
                  resetZoom();
-                    break;
-            }
+					break;
+			}
         }, false);
         // Hijack console log
         /*
@@ -198,11 +192,7 @@
         }
         console.debug("e.wheelDelta=%s,  e.detail=%s, w.gsc=%s", e.wheelDelta, e.detail, w.gsc);
 
-        if(e.gsc){
-            w.gsc = e.gsc;
-        }else{
-            w.gsc *= Math.pow(0.9, e.wheelDelta / -120 || e.detail / 2 || 0); // calc the zoom
-        }
+        w.gsc *= Math.pow(0.9, e.wheelDelta / -120 || e.detail / 2 || 0); // calc the zoom
         mgCalc = function(gsc){ // recalc the choosed zoom
             //console.debug('w.gsc=%s, gsc=%s', w.gsc, gsc); 
             w.gsc = gsc;
@@ -214,10 +204,10 @@
             }, 30);
         }
     }
-    // Reset zoom
-    function resetZoom() {
-        mgCalc = function(){w.gsc = 0.9;}.bind();
-    }
+	// Reset zoom
+	function resetZoom() {
+		mgCalc = function(){w.gsc = 0.9;}.bind();
+	}
     // Get console log
     function getConsoleLog(log) {
         //w.console.logOld(log);
@@ -229,8 +219,8 @@
     function setMenu() {
         var login = document.getElementById("login");
         if (login) {
-            // Unblock skins
-            w.localStorage.setItem("edttsg", "1");
+			// Unblock skins
+			w.localStorage.setItem("edttsg", "1");
             // Load settings
             loadSettings();
             // Keys info
@@ -340,7 +330,7 @@
             select.appendChild(option);
             // Menu footer           
             sltMenu.innerHTML += '<a href="http://ogario.ovh" target="_blank" style="color: #56ac81;">Visit ogario.ovh</a> | ';
-            sltMenu.innerHTML += '<a href="https://www.youtube.com/channel/UCaWiPNJWnhzYDrBQoXokn6w" target="_blank" style="color: #56ac81;">YT Channel</a>';
+			sltMenu.innerHTML += '<a href="https://www.youtube.com/channel/UCaWiPNJWnhzYDrBQoXokn6w" target="_blank" style="color: #56ac81;">YT Channel</a>';
             // Get IP input
             inpIP = document.getElementById("server-ip");
             // Get nick
@@ -385,7 +375,7 @@
                 renderMode = mode;
             }
         }
-        if (w.localStorage.getItem("highscore") != null) {
+		if (w.localStorage.getItem("highscore") != null) {
             var score = parseFloat(w.localStorage.getItem("highscore"));
             if (score > 0) {
                 highScore = score;
@@ -511,57 +501,57 @@
             w.render_mode = renderMode;
         }
     }
-    // Quick resp
-    function quickResp() {
+	// Quick resp
+	function quickResp() {
         w.dead_mtm = 0;
         w.login_fr = 0;
-        forceConnect();
-    }
-    // Quit to menu
-    function quit() {
+		forceConnect();
+	}
+	// Quit to menu
+	function quit() {
         if (w.playing && w.resetGame) {
             w.want_close_socket = true;
             w.dead_mtm = 0;
-            if (w.play_btn) {
-                w.play_btn.setEnabled(true);
-            }
-            w.resetGame();
+			if (w.play_btn) {
+				w.play_btn.setEnabled(true);
+			}
+			w.resetGame();
         }
     }
-    // Change skin
-    function changeSkin() {
-        if (w.playing && w.snake != null) {
-            var skin = w.snake.rcv,
-                max = w.max_skin_cv || 25;
-            skin++;
-            if (skin > max) {
-                skin = 0;
-            }
-            w.setSkin(w.snake, skin);
-        }
-    }
-    // Rotate skin
-    function rotateSkin() {
-        if (!rotate) {
-            return;
-        }
-        changeSkin();
-        setTimeout(rotateSkin, 500);
-    }
-    // Set high score
-    function setHighScore() {
-        if (!w.snake || !w.fpsls || !w.fmlts) {
-            return;
-        }
-        var currentScore = Math.floor(150 * (w.fpsls[w.snake.sct] + w.snake.fam / w.fmlts[w.snake.sct] - 1) - 50) / 10;
-        if (currentScore > highScore) {
-            highScore = currentScore;
-            w.localStorage.setItem("highscore", highScore);
-        }
-        if (scoreHUD && highScore > 0) {
-            scoreHUD.textContent = "Best score: " + highScore;
-        }
-    }
+	// Change skin
+	function changeSkin() {
+		if (w.playing && w.snake != null) {
+			var skin = w.snake.rcv,
+				max = w.max_skin_cv || 25;
+			skin++;
+			if (skin > max) {
+				skin = 0;
+			}
+			w.setSkin(w.snake, skin);
+		}
+	}
+	// Rotate skin
+	function rotateSkin() {
+		if (!rotate) {
+			return;
+		}
+		changeSkin();
+		setTimeout(rotateSkin, 500);
+	}
+	// Set high score
+	function setHighScore() {
+		if (!w.snake || !w.fpsls || !w.fmlts) {
+			return;
+		}
+		var currentScore = Math.floor(150 * (w.fpsls[w.snake.sct] + w.snake.fam / w.fmlts[w.snake.sct] - 1) - 50) / 10;
+		if (currentScore > highScore) {
+			highScore = currentScore;
+			w.localStorage.setItem("highscore", highScore);
+		}
+		if (scoreHUD && highScore > 0) {
+			scoreHUD.textContent = "Best score: " + highScore;
+		}
+	}
     // Show FPS
     function showFPS() {
         if (w.playing && fpsHUD && w.fps && w.lrd_mtm) {
@@ -575,7 +565,7 @@
     // Update loop
     function updateLoop() {
         setGraphics();
-        setHighScore();
+		setHighScore();
         if (w.playing) {
             if (positionHUD) {
                 positionHUD.textContent = "X: " + (~~w.view_xx || 0) + " Y: " + (~~w.view_yy || 0);
@@ -588,9 +578,9 @@
                 }
             }
         } else {
-            positionHUD.textContent = "";
-            fpsHUD.textContent = "";
-        }
+			positionHUD.textContent = "";
+			fpsHUD.textContent = "";
+		}
         setTimeout(updateLoop, 1000);
     }
     // Init
