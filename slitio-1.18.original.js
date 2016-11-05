@@ -48,7 +48,7 @@
             document.body.onmousewheel = zoom;
         }
         // Keys
-        window.mgGsc = 0.45;
+        window.mgGsc = 0.55;
         w.addEventListener("keydown", function(e) {
             switch(e.keyCode) {
                 // CTRL + ESC - quick resp
@@ -73,13 +73,13 @@
                         changeSkin();
                     }else{
                         zoom({
-                            wheelDelta: -0.10
+                            floatValue: -0.10
                         })
                     }
                 break;
                 case 87: // W
                     zoom({
-                        wheelDelta: 0.10
+                        floatValue: 0.10
                     })
                 break;
                 // Z - Reset zoom
@@ -125,9 +125,10 @@
 
         if(e.gsc){
             w.gsc = e.gsc;
+        }else if(e.floatValue != undefined){
+            w.gsc += e.floatValue; // calc the zoom
         }else{
-            w.gsc += e.wheelDelta; // calc the zoom
-            // w.gsc *= Math.pow(0.9, e.wheelDelta / -120 || e.detail / 2 || 0); // calc the zoom
+            w.gsc *= Math.pow(0.9, e.wheelDelta / -120 || e.detail / 2 || 0); // calc the zoom
         }
         mgCalc = function(gsc){ // recalc the choosed zoom
             w.gsc = gsc;
